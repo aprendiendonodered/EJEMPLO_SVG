@@ -2,7 +2,10 @@
     "name": "EJEMPLO_SVG",
     "description": "A Node-RED Project",
     "version": "0.0.1",
-    "dependencies": {},
+    "dependencies": {
+        "node-red-contrib-ui-svg": "2.3.1",
+        "node-red-dashboard": "3.1.2"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flow.json",

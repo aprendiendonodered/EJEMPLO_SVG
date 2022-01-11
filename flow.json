@@ -1,1 +1,223 @@
-[]
+[
+    {
+        "id": "bf2c308a.6d648",
+        "type": "tab",
+        "label": "EJEMPLO SVG",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b12ef190.f0ca9",
+        "type": "ui_group",
+        "name": "Imagen SVG",
+        "tab": "e333d7a9.1edeb8",
+        "order": 2,
+        "disp": true,
+        "width": 3,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6ce4fa53.cd8f54",
+        "type": "ui_group",
+        "name": "Acciones",
+        "tab": "e333d7a9.1edeb8",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "89c95e8e.799a3",
+        "type": "mqtt-broker",
+        "name": "enriquecrespo.com",
+        "broker": "enriquecrespo.com",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e333d7a9.1edeb8",
+        "type": "ui_tab",
+        "name": "EJEMPLO SVG",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "4fb3908.a57857",
+        "type": "ui_button",
+        "z": "bf2c308a.6d648",
+        "name": "",
+        "group": "6ce4fa53.cd8f54",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Actualiza SVG",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 230,
+        "y": 120,
+        "wires": [
+            [
+                "bdfa241a.a9eb88"
+            ]
+        ]
+    },
+    {
+        "id": "d14a1c4c.26922",
+        "type": "debug",
+        "z": "bf2c308a.6d648",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "bdfa241a.a9eb88",
+        "type": "function",
+        "z": "bf2c308a.6d648",
+        "name": "",
+        "func": "msg.payload = [{\n     \"command\": \"update_text\",\n     \"elementId\": \"e2_texte\",\n     \"textContent\": \"OK\"\n    },\n    {\n    \"command\": \"update_style\",\n    \"selector\": \"#e6_shape\",\n    \"attributeName\": \"fill\",\n    \"attributeValue\": \"orange\"\n    }];\n \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "a7b4a665.2cf928",
+                "d14a1c4c.26922"
+            ]
+        ]
+    },
+    {
+        "id": "67a22629.f9fd78",
+        "type": "mqtt in",
+        "z": "bf2c308a.6d648",
+        "name": "",
+        "topic": "casa/raspberrypi3/Temperatura",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "89c95e8e.799a3",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 190,
+        "y": 360,
+        "wires": [
+            [
+                "6f5fa284.e9869c",
+                "3e632b0.85b51d6"
+            ]
+        ]
+    },
+    {
+        "id": "6f5fa284.e9869c",
+        "type": "debug",
+        "z": "bf2c308a.6d648",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "3e632b0.85b51d6",
+        "type": "function",
+        "z": "bf2c308a.6d648",
+        "name": "",
+        "func": "var temp = msg.payload;\n\nvar color = (temp > 60) ? \"red\" : \"green\";\n\nmsg2 = {}\n\nmsg2.payload = [{\n     \"command\": \"update_text\",\n     \"elementId\": \"e1_texte\",\n     \"textContent\": temp\n    },\n    {\n    \"command\": \"update_style\",\n    \"selector\": \"#e1_shape\",\n    \"attributeName\": \"fill\",\n    \"attributeValue\": color\n    }];\n \nreturn msg2;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 220,
+        "wires": [
+            [
+                "a7b4a665.2cf928",
+                "d14a1c4c.26922"
+            ]
+        ]
+    },
+    {
+        "id": "a7b4a665.2cf928",
+        "type": "ui_svg_graphics",
+        "z": "bf2c308a.6d648",
+        "group": "b12ef190.f0ca9",
+        "order": 1,
+        "width": 3,
+        "height": 8,
+        "svgString": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0\" y=\"0\" height=\"100%\" viewBox=\"4.702970027923584 4.455445766448975 33.16831588745117 76.48514556884766\" width=\"100%\" preserveAspectRatio=\"xMinYMin meet\" onload=\"\">\n  <rect id=\"svgEditorBackground\" x=\"4.702970027923584\" y=\"4.455445766448975\" width=\"33.16831588745117\" height=\"76.48514556884766\" style=\"fill:url(#svgEditorGrid2); stroke: none;\"/>\n  <!-- Add here your SVG shapes (circles, rectangles, ...) -->\n  <!-- Or remove everything, if you want to paste an entire drawing (<svg...>...</svg>).-->\n  <g id=\"e8_group\">\n    <path d=\"M-13.621916,-10.972751v-1.5a2,2,0,0,0,-2,-2h-4a2,2,0,0,0,-2,2v3a2,2,0,0,0,2,2h4a2,2,0,0,0,2,-2Z\" style=\"fill:rosybrown; stroke:black; vector-effect:non-scaling-stroke;stroke-width:1px;\" id=\"e2_shape\" transform=\"matrix(2.95305 0 0 1.26856 73.3255 34.3905)\"/><text style=\"fill:black;font-family:Arial;font-size:6px;\" x=\"14.356421\" y=\"22.52475\" id=\"e2_texte\" transform=\"matrix(1 0 0 1 -1.23631 0)\">texto2</text>\n    <path d=\"M-13.686026,-18.146406v-1.5a2,2,0,0,0,-2,-2h-4a2,2,0,0,0,-2,2v3a2,2,0,0,0,2,2h4a2,2,0,0,0,2,-2Z\" style=\"fill:rosybrown; stroke:black; vector-effect:non-scaling-stroke;stroke-width:1px;\" id=\"e1_shape\" transform=\"matrix(2.95305 0 0 1.26856 73.5148 34.3905)\"/><text style=\"fill:black;font-family:Arial;font-size:6px;\" x=\"14.356429\" y=\"13.61386\" id=\"e1_texte\" transform=\"matrix(1 0 0 1 -1.23631 0)\">texto1</text>\n    <path d=\"M-13.686026,2.926838v-1.5a2,2,0,0,0,-2-2h-4a2,2,0,0,0,-2,2v3a2,2,0,0,0,2,2h4a2,2,0,0,0,2-2Z\" style=\"fill:rosybrown; stroke:black; vector-effect:non-scaling-stroke;stroke-width:1px;\" id=\"e4_shape\" transform=\"matrix(2.95305 0 0 1.26856 73.5148 34.3905)\"/><text style=\"fill:black;font-family:Arial;font-size:6px;\" x=\"14.356421\" y=\"40.346497\" id=\"e4_texte\" transform=\"matrix(1 0 0 1 -1.23631 0)\">texto4</text>\n    <path d=\"M-13.686026,-4.097577v-1.5a2,2,0,0,0,-2,-2h-4a2,2,0,0,0,-2,2v3a2,2,0,0,0,2,2h4a2,2,0,0,0,2,-2Z\" style=\"fill:rosybrown; stroke:black; vector-effect:non-scaling-stroke;stroke-width:1px;\" id=\"e3_shape\" transform=\"matrix(2.95305 0 0 1.26856 73.5148 34.3905)\"/><text style=\"fill:black;font-family:Arial;font-size:6px;\" x=\"14.356429\" y=\"31.435623\" id=\"e3_texte\" transform=\"matrix(1 0 0 1 -1.23631 0)\">texto3</text>\n    <path d=\"M-13.686026,16.975668v-1.5a2,2,0,0,0,-2,-2h-4a2,2,0,0,0,-2,2v3a2,2,0,0,0,2,2h4a2,2,0,0,0,2,-2Z\" style=\"fill:rosybrown; stroke:black; vector-effect:non-scaling-stroke;stroke-width:1px;\" id=\"e6_shape\" transform=\"matrix(2.95305 0 0 1.26856 73.5148 34.3905)\"/><text style=\"fill:black;font-family:Arial;font-size:6px;\" x=\"14.356421\" y=\"58.168247\" id=\"e6_texte\" transform=\"matrix(1 0 0 1 -1.23631 0)\">texto6</text>\n    <path d=\"M-13.686026,9.951253v-1.5a2,2,0,0,0,-2-2h-4a2,2,0,0,0,-2,2v3a2,2,0,0,0,2,2h4a2,2,0,0,0,2-2Z\" style=\"fill:rosybrown; stroke:black; vector-effect:non-scaling-stroke;stroke-width:1px;\" id=\"e5_shape\" transform=\"matrix(2.95305 0 0 1.26856 73.5148 34.3905)\"/><text style=\"fill:black;font-family:Arial;font-size:6px;\" x=\"14.356429\" y=\"49.257378\" id=\"e5_texte\" transform=\"matrix(1 0 0 1 -1.23631 0)\">texto5</text>\n    <path d=\"M-13.686026,31.024497v-1.5a2,2,0,0,0,-2-2h-4a2,2,0,0,0,-2,2v3a2,2,0,0,0,2,2h4a2,2,0,0,0,2-2Z\" style=\"fill:rosybrown; stroke:black; vector-effect:non-scaling-stroke;stroke-width:1px;\" id=\"e8_shape\" transform=\"matrix(2.95305 0 0 1.26856 73.5148 34.3905)\"/><text style=\"fill:black;font-family:Arial;font-size:6px;\" x=\"14.356421\" y=\"75.98999\" id=\"e8_texte\" transform=\"matrix(1 0 0 1 -1.23631 0)\">texto8</text>\n    <path d=\"M-13.686026,24.000082v-1.5a2,2,0,0,0,-2-2h-4a2,2,0,0,0,-2,2v3a2,2,0,0,0,2,2h4a2,2,0,0,0,2-2Z\" style=\"fill:rosybrown; stroke:black; vector-effect:non-scaling-stroke;stroke-width:1px;\" id=\"e7_shape\" transform=\"matrix(2.95305 0 0 1.26856 73.5148 34.3905)\"/><text style=\"fill:black;font-family:Arial;font-size:6px;\" x=\"14.356429\" y=\"67.079124\" id=\"e7_texte\" transform=\"matrix(1 0 0 1 -1.23631 0)\">texto7</text>\n  </g>\n</svg>",
+        "clickableShapes": [],
+        "javascriptHandlers": [],
+        "smilAnimations": [],
+        "bindings": [],
+        "showCoordinates": true,
+        "autoFormatAfterEdit": false,
+        "showBrowserErrors": false,
+        "showBrowserEvents": false,
+        "enableJsDebugging": false,
+        "sendMsgWhenLoaded": false,
+        "outputField": "payload",
+        "editorUrl": "//drawsvg.org/drawsvg.html",
+        "directory": "",
+        "panning": "disabled",
+        "zooming": "disabled",
+        "panOnlyWhenZoomed": false,
+        "doubleClickZoomEnabled": false,
+        "mouseWheelZoomEnabled": false,
+        "dblClickZoomPercentage": 150,
+        "name": "",
+        "x": 660,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    }
+]
